@@ -1,5 +1,5 @@
 {
-  "name": "@erickwendel/gdrive-webapi",
+  "name": "@arielribeiror/gdrive-webapi",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "test:cov": "NODE_OPTIONS=--experimental-vm-modules npx jest --no-cache --runInBand --coverage"
   },
   "keywords": [],
-  "author": "erickwendel",
+  "author": "arielribeiror",
   "license": "ISC",
   "devDependencies": {
     "jest": "^27.1.0"
