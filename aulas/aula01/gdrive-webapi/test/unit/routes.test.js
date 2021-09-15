@@ -81,6 +81,7 @@ describe("#Routes test suite", () => {
       await routes.handler(...params.values());
       expect(routes.post).toHaveBeenCalled();
     });
+
     test("given method GET it should choose get route", async () => {
       const routes = new Routes();
       const params = {
@@ -105,10 +106,11 @@ describe("#Routes test suite", () => {
         {
           size: "188 kB",
           lastModified: "2021-09-03T20:56:28.443Z",
-          owner: "erickwendel",
+          owner: "arielribeiro",
           file: "file.txt",
         },
       ];
+      
       jest
         .spyOn(routes.fileHelper, routes.fileHelper.getFilesStatus.name)
         .mockResolvedValue(filesStatusesMock);
