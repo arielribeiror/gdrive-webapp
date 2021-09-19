@@ -13,7 +13,7 @@ export default class UploadHeader {
   }
 
   canExecute(lastExecution) {
-    return Date.now() - lastExecution > this.messsageTimeDelay;
+    return Date.now() - lastExecution >= this.messsageTimeDelay;
   }
 
   handleFileBuffer(filename) {
@@ -35,7 +35,7 @@ export default class UploadHeader {
           .emit(this.ON_UPLOAD_EVENT, { processedAlready, filename });
 
         logger.info(
-          `File [${filename}] got ${processedAlready} bytos to ${this.socketId}`
+          `File [${filename}] got ${processedAlready} bytes to ${this.socketId}`
         );
       }
     }

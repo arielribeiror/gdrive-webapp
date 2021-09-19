@@ -113,19 +113,21 @@ describe("#UploadHandler test suite", () => {
       expect(onWrite.mock.calls.join()).toEqual(messages.join());
     });
 
-    test("given message timerDelay as 2secs it should emit only two messages during 3 seconds period", async () => {
+    test("given message timerDelay as 2secs it should emit only two messages during 2 seconds period", async () => {
       jest.spyOn(ioObj, ioObj.emit.name);
 
       const day = "2021-07-01 01:01";
-      const onInitVariable = TestUtil.getTimeFromDate(`${day}:01`);
+
+      const onFirstLastMessageSent = TestUtil.getTimeFromDate(`${day}:00`);
+
       const onFirstCanExecute = TestUtil.getTimeFromDate(`${day}:02`);
+      const onSecondUpdateLastMessageSent = onFirstCanExecute;
+
       const onSecondCanExecute = TestUtil.getTimeFromDate(`${day}:03`);
       const onThirdCanExecute = TestUtil.getTimeFromDate(`${day}:04`);
 
-      const onSecondUpdateLastMessageSent = onThirdCanExecute;
-
       TestUtil.mockDateNow([
-        onInitVariable,
+        onFirstLastMessageSent,
         onFirstCanExecute,
         onSecondCanExecute,
         onThirdCanExecute,
@@ -156,7 +158,7 @@ describe("#UploadHandler test suite", () => {
       ]);
       expect(secondCallResult).toEqual([
         handler.ON_UPLOAD_EVENT,
-        { processedAlready: "helloworld".length, filename },
+        { processedAlready: messages.join("").length, filename },
       ]);
     });
   });
@@ -197,5 +199,3 @@ describe("#UploadHandler test suite", () => {
     });
   });
 });
-
-// PAREI EM 01:50:41 //////////////////////////
