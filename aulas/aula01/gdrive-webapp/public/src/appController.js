@@ -1,7 +1,8 @@
 export default class AppController {
-  constructor({ connectionManager, viewManager }) {
+  constructor({ connectionManager, viewManager, dragAndDropManager }) {
     this.connectionManager = connectionManager;
     this.viewManager = viewManager;
+    this.dragAndDropManager = dragAndDropManager;
 
     this.uploadingFiles = new Map();
   }
@@ -10,6 +11,10 @@ export default class AppController {
     this.viewManager.configureFileBtnClick();
     this.viewManager.configureModal();
     this.viewManager.configureOnFileChange(this.onFileChange.bind(this));
+    this.dragAndDropManager.initialize({
+      onDropHandler: this.onFileChange.bind(this),
+    });
+
     this.connectionManager.configureEvents({
       onProgress: this.onProgress.bind(this),
     });
@@ -21,7 +26,7 @@ export default class AppController {
 
   async onProgress({ processedAlready, filename }) {
     console.debug({ processedAlready, filename });
-    
+
     const file = this.uploadingFiles.get(filename);
     const alreadyProcessed = Match.ceil((processedAlready / file.size) * 100);
     this.updateProgress(file, alreadyProcessed);
@@ -43,6 +48,8 @@ export default class AppController {
   }
 
   async onFileChange(files) {
+    this.uploadingFiles.clear();
+    
     this.viewManager.openModal();
     this.viewManager.updateStatus(0);
     const requests = [];
